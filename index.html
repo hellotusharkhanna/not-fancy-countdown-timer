@@ -40,6 +40,20 @@
           </li>
         </ul>
 
+        <div class="custom-timer-input-wrapper">
+          <input type="text" ref="timerInput" v-model="hiddenValue" class="custom-timer-input" @keyup.left="onInputKeyLeft($event)" />
+          <div v-on:click.prevent="editTimer">
+            <span tabindex="0" ref="timer6" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[5]) ? (displayedHiddenValue[5]) : 0 }}</span>
+            <span tabindex="0" ref="timer5" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[4]) ? (displayedHiddenValue[4]) : 0 }}</span>
+            <span> : </span>
+            <span tabindex="0" ref="timer4" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[3]) ? (displayedHiddenValue[3]) : 0 }}</span>
+            <span tabindex="0" ref="timer3" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[2]) ? (displayedHiddenValue[2]) : 0 }}</span>
+            <span> : </span>
+            <span tabindex="0" ref="timer2" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[1]) ? (displayedHiddenValue[1]) : 0 }}</span>
+            <span tabindex="0" ref="timer1" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[0]) ? (displayedHiddenValue[0]) : 0 }}</span>
+          </div>
+        </div>
+
         <!-- Social Media Footer -->
         <div class="social-media-footer">
           <div class="columns is-mobile social-columns">

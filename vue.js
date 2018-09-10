@@ -3,9 +3,12 @@ var intervalTimer;
 new Vue({
   el: '#app',
   data: {
+    activeCursor: false,
     selectedTime: 0,
     timeLeft: '00:00',
     endTime: '0',
+    hiddenValue: undefined,
+    displayedHiddenValue: undefined,
     times: [
       {
         sec: 3,
@@ -65,6 +68,25 @@ new Vue({
 
       this.endTime = `${hourConvert(hour)}:${zeroPadded(minutes)}`
     },
+    editTimer() {
+      this.$refs.timerInput.focus();
+      this.activeCursor = true;
+    },
+    onInputKeyLeft(event) {
+      const caretPos = event.target.selectionStart;
+      attachBorderTo = caretPos;
+    }
+  },
+  watch: {
+    hiddenValue: function(val) {
+      let re = /[^0-9]/gi;
+      this.$set(this, 'hiddenValue', val.replace(re, ''));
+      this.displayedHiddenValue = this.hiddenValue.split('').reverse().join('');
+      if(val && val.length > 6) {
+        this.hiddenValue = this.hiddenValue.substr(val.length - 6);
+        this.displayedHiddenValue = this.hiddenValue;
+      }
+    }
   }
 })
 

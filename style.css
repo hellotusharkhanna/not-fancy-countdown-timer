@@ -51,6 +51,24 @@ h3 span {
   margin-left: 0;
   margin-right: 0;
 }
+.custom-timer-input-wrapper {
+  position: relative;
+}
+.custom-timer-input-wrapper .active-cursor {
+  border-right: 1px solid black;
+}
+.custom-timer-input-wrapper .custom-timer-input {
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 110px;
+  right: 0;
+  z-index: 1;
+  opacity: 1;
+  /* width: 0; */
+  /* height: 0; */
+}
+
 /* ==================
 *  SOCIAL MEDIA
 * ================== */
