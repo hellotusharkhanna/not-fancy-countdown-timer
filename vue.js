@@ -3,12 +3,12 @@ var intervalTimer;
 new Vue({
   el: '#app',
   data: {
-    activeCursor: false,
     selectedTime: 0,
     timeLeft: '00:00',
     endTime: '0',
     hiddenValue: undefined,
     displayedHiddenValue: undefined,
+    attachBorderTo: 1,
     times: [
       {
         sec: 3,
@@ -44,15 +44,15 @@ new Vue({
       intervalTimer = setInterval(() => {
         const secondsLeft = Math.round((end - Date.now()) / 1000);
 
-        if(secondsLeft === 0) {
+        if (secondsLeft === 0) {
           this.endTime = 0;
         }
 
-        if(secondsLeft < 0) {
+        if (secondsLeft < 0) {
           clearInterval(intervalTimer);
           return;
         }
-        this.displayTimeLeft(secondsLeft)
+        this.displayTimeLeft(secondsLeft);
       }, 1000);
     },
     displayTimeLeft(secondsLeft) {
@@ -66,29 +66,39 @@ new Vue({
       const hour = end.getHours();
       const minutes = end.getMinutes();
 
-      this.endTime = `${hourConvert(hour)}:${zeroPadded(minutes)}`
+      this.endTime = `${hourConvert(hour)}:${zeroPadded(minutes)}`;
     },
     editTimer() {
       this.$refs.timerInput.focus();
       this.activeCursor = true;
     },
-    onInputKeyLeft(event) {
-      const caretPos = event.target.selectionStart;
-      attachBorderTo = caretPos;
+    onInputKeyLeft() {
+      this.attachBorderTo =
+        this.attachBorderTo === 6
+          ? 6
+          : Math.min(
+              this.displayedHiddenValue.length + 1,
+              this.attachBorderTo + 1
+            );
+    },
+    onInputKeyRight() {
+      this.attachBorderTo =
+        this.attachBorderTo === 1 ? 1 : this.attachBorderTo - 1;
     }
   },
   watch: {
-    hiddenValue: function(val) {
-      let re = /[^0-9]/gi;
-      this.$set(this, 'hiddenValue', val.replace(re, ''));
-      this.displayedHiddenValue = this.hiddenValue.split('').reverse().join('');
-      if(val && val.length > 6) {
-        this.hiddenValue = this.hiddenValue.substr(val.length - 6);
+    hiddenValue: function(newVal) {
+      this.displayedHiddenValue = this.hiddenValue
+        .split('')
+        .reverse()
+        .join('');
+      if (newVal && newVal.length > 6) {
+        this.hiddenValue = this.hiddenValue.substr(newVal.length - 6);
         this.displayedHiddenValue = this.hiddenValue;
       }
     }
   }
-})
+});
 
 function zeroPadded(num) {
   // 4 --> 04
@@ -97,5 +107,5 @@ function zeroPadded(num) {
 
 function hourConvert(hour) {
   // 15 --> 3
-  return (hour % 12) || 12;
+  return hour % 12 || 12;
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
   <title>Not Fancy Countdown Timer</title>
 </head>
+
 <body>
   <!-- app -->
   <div id="app">
@@ -21,16 +23,14 @@
           <h2>
             {{ timeLeft }}
           </h2>
-          <h3>Countdown ends at <span>{{ endTime }}</span></h3>
+          <h3>Countdown ends at
+            <span>{{ endTime }}</span>
+          </h3>
         </div>
 
         <ul class="columns is-mobile is-centered">
-          <li v-for="(time, index) in times"
-            :key="index"
-            class="column time"
-          >
-            <a v-on:click.prevent="setTime(time.sec)"
-              :class="[
+          <li v-for="(time, index) in times" :key="index" class="column time">
+            <a v-on:click.prevent="setTime(time.sec)" :class="[
                 'button',
                 'is-link',
                 {'is-active': time.sec === selectedTime && endTime !== 0 }
@@ -41,16 +41,18 @@
         </ul>
 
         <div class="custom-timer-input-wrapper">
-          <input type="text" ref="timerInput" v-model="hiddenValue" class="custom-timer-input" @keyup.left="onInputKeyLeft($event)" />
+          attachBorderTo - {{attachBorderTo}}
+          <input type="number" ref="timerInput" v-model="hiddenValue" class="custom-timer-input" @keyup.left.prevent="onInputKeyLeft()"
+            @keyup.right.prevent="onInputKeyRight()" />
           <div v-on:click.prevent="editTimer">
-            <span tabindex="0" ref="timer6" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[5]) ? (displayedHiddenValue[5]) : 0 }}</span>
-            <span tabindex="0" ref="timer5" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[4]) ? (displayedHiddenValue[4]) : 0 }}</span>
+            <span tabindex="0" ref="timer6" v-bind:class="{'active-cursor': attachBorderTo === 6}">{{ (displayedHiddenValue && displayedHiddenValue[5]) ? (displayedHiddenValue[5]) : 0 }}</span>
+            <span tabindex="0" ref="timer5" v-bind:class="{'active-cursor': attachBorderTo === 5}">{{ (displayedHiddenValue && displayedHiddenValue[4]) ? (displayedHiddenValue[4]) : 0 }}</span>
             <span> : </span>
-            <span tabindex="0" ref="timer4" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[3]) ? (displayedHiddenValue[3]) : 0 }}</span>
-            <span tabindex="0" ref="timer3" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[2]) ? (displayedHiddenValue[2]) : 0 }}</span>
+            <span tabindex="0" ref="timer4" v-bind:class="{'active-cursor': attachBorderTo === 4}">{{ (displayedHiddenValue && displayedHiddenValue[3]) ? (displayedHiddenValue[3]) : 0 }}</span>
+            <span tabindex="0" ref="timer3" v-bind:class="{'active-cursor': attachBorderTo === 3}">{{ (displayedHiddenValue && displayedHiddenValue[2]) ? (displayedHiddenValue[2]) : 0 }}</span>
             <span> : </span>
-            <span tabindex="0" ref="timer2" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[1]) ? (displayedHiddenValue[1]) : 0 }}</span>
-            <span tabindex="0" ref="timer1" v-bind:class="{'active-cursor': activeCursor}">{{ (displayedHiddenValue && displayedHiddenValue[0]) ? (displayedHiddenValue[0]) : 0 }}</span>
+            <span tabindex="0" ref="timer2" v-bind:class="{'active-cursor': attachBorderTo === 2}">{{ (displayedHiddenValue && displayedHiddenValue[1]) ? (displayedHiddenValue[1]) : 0 }}</span>
+            <span tabindex="0" ref="timer1" v-bind:class="{'active-cursor': attachBorderTo === 1}">{{ (displayedHiddenValue && displayedHiddenValue[0]) ? (displayedHiddenValue[0]) : 0 }}</span>
           </div>
         </div>
 
@@ -70,7 +72,8 @@
               <a href="https://www.instagram.com/samanthaming/" target="_blank">samanthaming</a>
             </div>
           </div>
-        </div><!--end social media-->
+        </div>
+        <!--end social media-->
       </div>
     </div>
   </div>
@@ -78,4 +81,5 @@
   <!-- JavaScript -->
   <script src="vue.js"></script>
 </body>
+
 </html>
